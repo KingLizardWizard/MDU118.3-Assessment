@@ -30,11 +30,16 @@ public:
 	 */
 	void Render(Gdiplus::Graphics& canvas, const CRect& clientRect);
 
+	void PlayerInput(int axisH, int axisV);
+
+	Vector2i PlayerOffset = Vector2i::Zero;
+
 private:
 	GameManager();
 	~GameManager();
 
 	std::vector<GameObject*> objects;
+	std::vector<GameObject*> playerObject;
 };
 
 /**

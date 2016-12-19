@@ -12,7 +12,7 @@ public:
 	bool operator == (const GameObject& rhs)
 	{
 		return (type == rhs.type) &&
-			(location == rhs.location);
+			(location == rhs.location); 
 	}
 
 	bool operator != (const GameObject& rhs)

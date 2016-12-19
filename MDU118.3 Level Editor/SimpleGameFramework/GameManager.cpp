@@ -36,7 +36,7 @@ void GameManager::BeginPlay()
 	//Input for the Player Object
 	Player* player1 = new Player;
 	player1->type = egotPlayer;
-	player1->location = Vector2i(1200, 700);
+	player1->location = Vector2i(800, 600);
 	player1->name = "Player";
 	player1->rotation = 1.0f;
 	player1->xScale = 3.0f;
@@ -186,19 +186,26 @@ void GameManager::BeginPlay()
 
 	std::ifstream inputFile("objects.csv");
 	int versionNumber = 4;
-	int numObjects = 10;
+	int numObjects = 9;
 	inputFile >> versionNumber;
 	inputFile >> numObjects;
 
+	//bool playerLoaded = false;
+
+
+
 	//Load in all of the objects into a loop
+	playerObject.reserve(1);
 	objects.reserve(numObjects);
 	for (int index = 0; index < numObjects; ++index)
 	{
 		int typeValue;
 		inputFile >> typeValue;
+	
 		GameObjectType type = (GameObjectType)typeValue;
 
 		//Read the enumeration into a integer and then cast it to the specific enum
+		
 		GameObject* loadedObjectPtr = nullptr;
 		switch (type)
 		{
@@ -239,14 +246,22 @@ void GameManager::BeginPlay()
 			break;
 
 		case egotPlayer:
-			loadedObjectPtr = new Player();
+			loadedObjectPtr = new Player;
 			break;
+		}	
+
+		if (index == 0)
+		{
+			//Load the correct object type from the text file
+			loadedObjectPtr->LoadFromText(inputFile);
+			playerObject.push_back(loadedObjectPtr);
 		}
-
-		//Load the correct object type from the text file
-		loadedObjectPtr->LoadFromText(inputFile);
-
-		objects.push_back(loadedObjectPtr);
+		else
+		{
+			//Load the correct object type from the text file
+			loadedObjectPtr->LoadFromText(inputFile);
+			objects.push_back(loadedObjectPtr);
+		}
 	}
 }
 
@@ -264,6 +279,11 @@ void GameManager::EndPlay()
 	objects.clear();
 }
 
+void GameManager::PlayerInput(int axisH, int axisV)
+{
+	PlayerOffset += Vector2i(axisH, axisV);
+}
+
 void GameManager::Update(double deltaTime)
 {
 
@@ -276,10 +296,22 @@ void GameManager::Render(Gdiplus::Graphics& canvas, const CRect& clientRect)
 	canvas.GetTransform(&transform);
 
 	canvas.ScaleTransform(0.5f, 0.5f);
-	canvas.RotateTransform(0.0f);
+	//canvas.RotateTransform(0.0f);
+
+	canvas.TranslateTransform((Gdiplus::REAL)PlayerOffset.X, (Gdiplus::REAL)PlayerOffset.Y);
 
 	//Tell all of the GameObjects to render (includes children)
 	for (GameObject* objectPtr : objects)
+	{
+		objectPtr->Render(canvas, clientRect);
+	}
+
+	canvas.SetTransform(&transform);
+
+	canvas.ScaleTransform(0.5f, 0.5f);
+
+
+	for (GameObject* objectPtr : playerObject)
 	{
 		objectPtr->Render(canvas, clientRect);
 	}

@@ -50,6 +50,9 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 	// To detect simultaneous presses you must use GetKeyState and check
 	// each key of interest.
 
+	int axisH = 0;
+	int axisV = 0;
+
 	switch (keyCode)
 	{
 	case 'W':
@@ -70,12 +73,16 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 		break;
 
 	case VK_LEFT:
+		axisH += 30;
 		break;
 	case VK_RIGHT:
+		axisH -= 30;
 		break;
 	case VK_UP:
+		axisV += 30;
 		break;
 	case VK_DOWN:
+		axisV -= 30;
 		break;
 
 	case VK_CONTROL:
@@ -110,6 +117,9 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 	case VK_F12:
 		break;
 	}
+
+	GameManagerInstance.PlayerInput(axisH, axisV);
+
 }
 
 void GameInput::OnKeyUp(UINT keyCode, UINT repeatCount)
