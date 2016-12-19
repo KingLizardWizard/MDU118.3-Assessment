@@ -15,7 +15,7 @@ Rock::~Rock()
 void Rock::Render(Gdiplus::Graphics& canvas, const CRect& clientRect)
 {
 	GameFrameworkInstance.DrawText(canvas, Vector2i(location.X - 55, location.Y - 85), 16, "Arial", "Rock", Gdiplus::Color::White);
-	GameFrameworkInstance.DrawCircle(canvas, location, 50, true, Gdiplus::Color::SaddleBrown);		
+	GameFrameworkInstance.DrawCircle(canvas, location, 32, true, Gdiplus::Color::SaddleBrown);		
 }
 
 //Saving Object specific variables

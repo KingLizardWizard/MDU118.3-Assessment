@@ -56,33 +56,42 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 	switch (keyCode)
 	{
 	case 'W':
+		axisV += 64;
 		break;
 	case 'A':
+		axisH += 64;
 		break;
 	case 'S':
+		axisV -= 64;
 		break;
 	case 'D':
+		axisH -= 64;
 		break;
 	case 'Q':
 		break;
 	case 'E':
+		if (GameManagerInstance.editMode == true)
+			GameManagerInstance.editMode = false;
+		else
+			GameManagerInstance.editMode = true;
 		break;
 	case 'F':
 		break;
 	case 'C':
 		break;
 
+
 	case VK_LEFT:
-		axisH += 30;
+		axisV += 64;
 		break;
 	case VK_RIGHT:
-		axisH -= 30;
+		axisH += 64;
 		break;
 	case VK_UP:
-		axisV += 30;
+		axisV -= 64;
 		break;
 	case VK_DOWN:
-		axisV -= 30;
+		axisH -= 64;
 		break;
 
 	case VK_CONTROL:
@@ -145,6 +154,22 @@ void GameInput::OnKeyUp(UINT keyCode, UINT repeatCount)
 	case 'F':
 		break;
 	case 'C':
+		break;
+
+	case '1':
+		if (GameManagerInstance.editMode == true)
+		{
+			GameManagerInstance.noObjects += 1;
+			GameManagerInstance.numBarrels += 1;
+			GameManagerInstance.CreateObject(egotBarrel);
+		}
+		break;
+	case '2':
+		if (GameManagerInstance.editMode == true)
+		{
+			GameManagerInstance.noObjects += 1;
+			GameManagerInstance.CreateObject(egotRock);
+		}
 		break;
 
 	case VK_LEFT:

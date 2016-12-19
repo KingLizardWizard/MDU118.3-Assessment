@@ -50,7 +50,7 @@ void GameManager::BeginPlay()
 	//Input for the Rock Object
 	Rock* rock1 = new Rock;
 	rock1->type = egotRock;
-	rock1->location = Vector2i(600, 300);
+	rock1->location = Vector2i(player1->location.X, player1->location.Y);
 	rock1->name = "Rock";
 	rock1->rotation = 1.0f;
 	rock1->xScale = 3.0f;
@@ -61,14 +61,14 @@ void GameManager::BeginPlay()
 	//Input for the Barrel Object
 	Barrel* barrel1 = new Barrel;
 	barrel1->type = egotBarrel;
-	barrel1->location = Vector2i(900, 300);
+	barrel1->location = Vector2i(800, 600);
 	barrel1->name = "Barrel";
 	barrel1->rotation = 1.0f;
 	barrel1->xScale = 3.0f;
 	barrel1->yScale = 3.0f;
 	barrel1->imageName = "BarrelImage";
 	barrel1->destructible = false;
-
+/*
 	//Input for the Healing Mist Object
 	HealingMist* healingMist1 = new HealingMist;
 	healingMist1->type = egotHealingMist;
@@ -150,119 +150,58 @@ void GameManager::BeginPlay()
 	caveBat2->imageName = "CaveBatImage";
 	caveBat2->health = 15;
 	caveBat2->damage = 10;
-
+	*/
 	std::ofstream outputFile("objects.csv");
 
 	//Version Number
-	outputFile << 4 << std::endl;
+	outputFile << 2 << std::endl;
 
 	//Number of Objects
-	outputFile << 10 << std::endl;
+	outputFile << 3 << std::endl;
 
 	//Save all of the objects to a textfile
 	player1->SaveAsText(outputFile);
 	rock1->SaveAsText(outputFile);
 	barrel1->SaveAsText(outputFile);
-	healingMist1->SaveAsText(outputFile);
+/*	healingMist1->SaveAsText(outputFile);
 	fire1->SaveAsText(outputFile);
 	pickaxe1->SaveAsText(outputFile);
 	medkit1->SaveAsText(outputFile);
 	arrowTrap1->SaveAsText(outputFile);
 	caveBat1->SaveAsText(outputFile);
 	caveBat2->SaveAsText(outputFile);
-	outputFile.close();
+	outputFile.close();*/
 
 	//Free up memory by deleting the unneeded objects
 	delete player1;
 	delete rock1;
 	delete barrel1;
-	delete healingMist1;
+	/*delete healingMist1;
 	delete fire1;
 	delete pickaxe1;
 	delete medkit1;
 	delete arrowTrap1;
 	delete caveBat1;
-	delete caveBat2;
+	delete caveBat2;*/
 
 	std::ifstream inputFile("objects.csv");
 	int versionNumber = 4;
-	int numObjects = 9;
+	int numObjects = 1;
 	inputFile >> versionNumber;
 	inputFile >> numObjects;
 
-	//bool playerLoaded = false;
-
-
-
-	//Load in all of the objects into a loop
-	playerObject.reserve(1);
-	objects.reserve(numObjects);
-	for (int index = 0; index < numObjects; ++index)
-	{
-		int typeValue;
-		inputFile >> typeValue;
+	int typeValue;
+	inputFile >> typeValue;
 	
-		GameObjectType type = (GameObjectType)typeValue;
+	GameObjectType type = (GameObjectType)typeValue;
 
-		//Read the enumeration into a integer and then cast it to the specific enum
-		
-		GameObject* loadedObjectPtr = nullptr;
-		switch (type)
-		{
-		case egotBase:
-			DebugLog("Error - Object has base type");
-			break;
+	//Read the enumeration into a integer and then cast it to the specific enum	
+	GameObject* loadedObjectPtr = nullptr;
+	loadedObjectPtr = new Player;
 
-		case egotRock:
-			loadedObjectPtr = new Rock();
-			break;
-
-		case egotBarrel:
-			loadedObjectPtr = new Barrel();
-			break;
-
-		case egotHealingMist:
-			loadedObjectPtr = new HealingMist();
-			break;	 
-
-		case egotFire:
-			loadedObjectPtr = new Fire();
-			break;
-
-		case egotPickaxe:
-			loadedObjectPtr = new Pickaxe();
-			break;
-
-		case egotMedkit:
-			loadedObjectPtr = new Medkit();
-			break;
-
-		case egotArrowTrap:
-			loadedObjectPtr = new ArrowTrap();
-			break;
-
-		case egotCaveBat:
-			loadedObjectPtr = new CaveBat();
-			break;
-
-		case egotPlayer:
-			loadedObjectPtr = new Player;
-			break;
-		}	
-
-		if (index == 0)
-		{
-			//Load the correct object type from the text file
-			loadedObjectPtr->LoadFromText(inputFile);
-			playerObject.push_back(loadedObjectPtr);
-		}
-		else
-		{
-			//Load the correct object type from the text file
-			loadedObjectPtr->LoadFromText(inputFile);
-			objects.push_back(loadedObjectPtr);
-		}
-	}
+	//Load the correct object type from the text file
+	loadedObjectPtr->LoadFromText(inputFile);
+	playerObject.push_back(loadedObjectPtr);
 }
 
 void GameManager::EndPlay()
@@ -284,6 +223,109 @@ void GameManager::PlayerInput(int axisH, int axisV)
 	PlayerOffset += Vector2i(axisH, axisV);
 }
 
+void GameManager::CreateObject(GameObjectType)
+{
+
+	//Input for the Barrel Object
+	Barrel* barrel1 = new Barrel;
+	barrel1->type = egotBarrel;
+	barrel1->location = Vector2i(800, 600);
+	barrel1->name = "Barrel";
+	barrel1->rotation = 1.0f;
+	barrel1->xScale = 3.0f;
+	barrel1->yScale = 3.0f;
+	barrel1->imageName = "BarrelImage";
+	barrel1->destructible = false;
+
+	//Input for the Rock Object
+	Rock* rock1 = new Rock;
+	rock1->type = egotRock;
+	rock1->location = Vector2i(800, 600);
+	rock1->name = "Rock";
+	rock1->rotation = 1.0f;
+	rock1->xScale = 3.0f;
+	rock1->yScale = 3.0f;
+	rock1->imageName = "RockImage";
+	rock1->destructible = true;
+
+	std::ofstream outputFile("objects.csv");
+
+	//Version Number
+	outputFile << 2 << std::endl;
+
+	//Number of Objects
+	outputFile << noObjects << std::endl;
+
+	barrel1->SaveAsText(outputFile);
+	rock1->SaveAsText(outputFile);
+
+	delete barrel1;
+	delete rock1;
+
+	std::ifstream inputFile("objects.csv");
+
+	int versionNumber = 4;
+	int numObjects = noObjects;
+
+	inputFile >> versionNumber;
+	inputFile >> numObjects;
+
+	//Load in all of the objects into a loop
+	playerObject.reserve(numObjects);
+	objects.reserve(numObjects);
+	for (int index = 0; index < numObjects; ++index)
+	{
+		int typeValue;
+		inputFile >> typeValue;
+
+		GameObjectType type = (GameObjectType)typeValue;
+
+		//Read the enumeration into a integer and then cast it to the specific enum
+		GameObject* loadedObjectPtr = nullptr;
+		switch (type)
+		{
+		case egotBase:
+			DebugLog("Error - Object has base type");
+			break;
+
+		case egotRock:
+			loadedObjectPtr = new Rock();
+			break;
+
+		case egotBarrel:
+			loadedObjectPtr = new Barrel();
+			break;
+
+		case egotHealingMist:
+			loadedObjectPtr = new HealingMist();
+			break;
+
+		case egotFire:
+			loadedObjectPtr = new Fire();
+			break;
+
+		case egotPickaxe:
+			loadedObjectPtr = new Pickaxe();
+			break;
+
+		case egotMedkit:
+			loadedObjectPtr = new Medkit();
+			break;
+
+		case egotArrowTrap:
+			loadedObjectPtr = new ArrowTrap();
+			break;
+
+		case egotCaveBat:
+			loadedObjectPtr = new CaveBat();
+			break;
+		}
+		//Load the correct object type from the text file
+		loadedObjectPtr->LoadFromText(inputFile);
+		objects.push_back(loadedObjectPtr);
+	}
+}
+
 void GameManager::Update(double deltaTime)
 {
 
@@ -301,19 +343,25 @@ void GameManager::Render(Gdiplus::Graphics& canvas, const CRect& clientRect)
 	canvas.TranslateTransform((Gdiplus::REAL)PlayerOffset.X, (Gdiplus::REAL)PlayerOffset.Y);
 
 	//Tell all of the GameObjects to render (includes children)
-	for (GameObject* objectPtr : objects)
-	{
-		objectPtr->Render(canvas, clientRect);
-	}
+		for (GameObject* objectPtr : objects)
+		{
+			objectPtr->Render(canvas, clientRect);
+		}
 
 	canvas.SetTransform(&transform);
 
 	canvas.ScaleTransform(0.5f, 0.5f);
 
-
-	for (GameObject* objectPtr : playerObject)
+	if (editMode == false)
 	{
-		objectPtr->Render(canvas, clientRect);
+		for (GameObject* objectPtr : playerObject)
+		{
+			objectPtr->Render(canvas, clientRect);
+		}
+	}
+	else
+	{
+		GameFrameworkInstance.DrawRectangle(canvas, AABBi(Vector2i(768, 568), Vector2i(832, 632)), false, Gdiplus::Color::White);
 	}
 
 	//Restore transformation of scene

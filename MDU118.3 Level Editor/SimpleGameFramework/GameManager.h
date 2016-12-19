@@ -34,6 +34,13 @@ public:
 
 	Vector2i PlayerOffset = Vector2i::Zero;
 
+	void CreateObject(GameObjectType);
+
+public:
+	bool editMode = false;
+	int noObjects = 0;
+	int numBarrels = 0;
+
 private:
 	GameManager();
 	~GameManager();

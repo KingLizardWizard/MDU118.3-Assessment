@@ -15,7 +15,7 @@ Barrel::~Barrel()
 void Barrel::Render(Gdiplus::Graphics& canvas, const CRect& clientRect)
 {
 	GameFrameworkInstance.DrawText(canvas, Vector2i(location.X - 55, location.Y - 100), 16, "Arial", "Barrel", Gdiplus::Color::White);
-	GameFrameworkInstance.DrawRectangle(canvas, AABBi(Vector2i(location.X, 110), Vector2i(300, 200)), true, Gdiplus::Color::Blue);
+	GameFrameworkInstance.DrawCircle(canvas,location, 32, true, Gdiplus::Color::Blue);
 }
 
 //Saving Object specific variables

@@ -15,7 +15,7 @@ Player::~Player()
 void Player::Render(Gdiplus::Graphics& canvas, const CRect& clientRect)
 {
 	GameFrameworkInstance.DrawText(canvas, Vector2i(location.X - 55, location.Y - 85), 16, "Arial", "Player", Gdiplus::Color::White);
-	GameFrameworkInstance.DrawCircle(canvas, location, 50, true, Gdiplus::Color::DarkGreen);
+	GameFrameworkInstance.DrawCircle(canvas, location, 32, true, Gdiplus::Color::DarkGreen);
 }
 
 //Saving Object specific variables
