@@ -52,20 +52,26 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 
 	int axisH = 0;
 	int axisV = 0;
+	int playerAxisH = 0;
+	int playerAxisV = 0;
 
 	switch (keyCode)
 	{
 	case 'W':
 		axisV += 64;
+		playerAxisV -= 64;
 		break;
 	case 'A':
 		axisH += 64;
+		playerAxisH -= 64;
 		break;
 	case 'S':
 		axisV -= 64;
+		playerAxisV += 64;
 		break;
 	case 'D':
 		axisH -= 64;
+		playerAxisH += 64;
 		break;
 	case 'Q':
 		break;
@@ -81,17 +87,13 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 		break;
 
 
-	case VK_LEFT:
-		axisV += 64;
+	case VK_LEFT:	
 		break;
 	case VK_RIGHT:
-		axisH += 64;
 		break;
 	case VK_UP:
-		axisV -= 64;
 		break;
 	case VK_DOWN:
-		axisH -= 64;
 		break;
 
 	case VK_CONTROL:
@@ -128,6 +130,7 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 	}
 
 	GameManagerInstance.PlayerInput(axisH, axisV);
+	GameManagerInstance.PlayerLocation(playerAxisH, playerAxisV);
 
 }
 

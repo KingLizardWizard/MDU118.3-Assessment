@@ -32,9 +32,13 @@ public:
 
 	void PlayerInput(int axisH, int axisV);
 
+	void PlayerLocation(int playerAxisH, int playerAxisV);
+
 	Vector2i PlayerOffset = Vector2i::Zero;
 
 	void CreateObject(GameObjectType);
+
+	Vector2i playerLocation = Vector2i(800,600);
 
 public:
 	bool editMode = false;

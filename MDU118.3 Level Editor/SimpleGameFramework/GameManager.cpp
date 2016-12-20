@@ -47,7 +47,7 @@ void GameManager::BeginPlay()
 	player1->fireRate = 1;
 	player1->damage = 10;
 
-	//Input for the Rock Object
+/*	//Input for the Rock Object
 	Rock* rock1 = new Rock;
 	rock1->type = egotRock;
 	rock1->location = Vector2i(player1->location.X, player1->location.Y);
@@ -68,7 +68,7 @@ void GameManager::BeginPlay()
 	barrel1->yScale = 3.0f;
 	barrel1->imageName = "BarrelImage";
 	barrel1->destructible = false;
-/*
+
 	//Input for the Healing Mist Object
 	HealingMist* healingMist1 = new HealingMist;
 	healingMist1->type = egotHealingMist;
@@ -161,9 +161,9 @@ void GameManager::BeginPlay()
 
 	//Save all of the objects to a textfile
 	player1->SaveAsText(outputFile);
-	rock1->SaveAsText(outputFile);
+/*	rock1->SaveAsText(outputFile);
 	barrel1->SaveAsText(outputFile);
-/*	healingMist1->SaveAsText(outputFile);
+	healingMist1->SaveAsText(outputFile);
 	fire1->SaveAsText(outputFile);
 	pickaxe1->SaveAsText(outputFile);
 	medkit1->SaveAsText(outputFile);
@@ -174,9 +174,9 @@ void GameManager::BeginPlay()
 
 	//Free up memory by deleting the unneeded objects
 	delete player1;
-	delete rock1;
+/*	delete rock1;
 	delete barrel1;
-	/*delete healingMist1;
+	delete healingMist1;
 	delete fire1;
 	delete pickaxe1;
 	delete medkit1;
@@ -223,13 +223,18 @@ void GameManager::PlayerInput(int axisH, int axisV)
 	PlayerOffset += Vector2i(axisH, axisV);
 }
 
+void GameManager::PlayerLocation(int playerAxisH, int playerAxisV)
+{
+	playerLocation += Vector2i(playerAxisH, playerAxisV);
+}
+
 void GameManager::CreateObject(GameObjectType)
 {
-
+	
 	//Input for the Barrel Object
 	Barrel* barrel1 = new Barrel;
 	barrel1->type = egotBarrel;
-	barrel1->location = Vector2i(800, 600);
+	barrel1->location = Vector2i(playerLocation.X, playerLocation.Y);
 	barrel1->name = "Barrel";
 	barrel1->rotation = 1.0f;
 	barrel1->xScale = 3.0f;
@@ -240,7 +245,7 @@ void GameManager::CreateObject(GameObjectType)
 	//Input for the Rock Object
 	Rock* rock1 = new Rock;
 	rock1->type = egotRock;
-	rock1->location = Vector2i(800, 600);
+	rock1->location = Vector2i(playerLocation.X, playerLocation.Y);
 	rock1->name = "Rock";
 	rock1->rotation = 1.0f;
 	rock1->xScale = 3.0f;
