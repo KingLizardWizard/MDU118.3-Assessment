@@ -27,7 +27,6 @@ protected:
 
 	//Object specific variables
 public:
-
 	bool destructible;
 };
 

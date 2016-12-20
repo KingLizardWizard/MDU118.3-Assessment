@@ -42,8 +42,6 @@ public:
 
 public:
 	bool editMode = false;
-	int noObjects = 0;
-	int numBarrels = 0;
 
 private:
 	GameManager();

@@ -49,14 +49,18 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 	// NOTE: This method will not detect multiple simultaneous key presses.
 	// To detect simultaneous presses you must use GetKeyState and check
 	// each key of interest.
-
+	
+	// Movement of the camera
 	int axisH = 0;
 	int axisV = 0;
+
+	// Shows where the player currently is, allowing objects to easily be spawned on it
 	int playerAxisH = 0;
 	int playerAxisV = 0;
 
 	switch (keyCode)
 	{
+		// Upon hitting the WASD keys the camera and player location move in different positions
 	case 'W':
 		axisV += 64;
 		playerAxisV -= 64;
@@ -75,6 +79,7 @@ void GameInput::OnKeyDown(UINT keyCode, UINT repeatCount)
 		break;
 	case 'Q':
 		break;
+		// Allows editing mode to be turned on and off
 	case 'E':
 		if (GameManagerInstance.editMode == true)
 			GameManagerInstance.editMode = false;
@@ -159,19 +164,42 @@ void GameInput::OnKeyUp(UINT keyCode, UINT repeatCount)
 	case 'C':
 		break;
 
+		// Depending which number is pressed, the corresponding object is placed
 	case '1':
 		if (GameManagerInstance.editMode == true)
 		{
-			GameManagerInstance.noObjects += 1;
-			GameManagerInstance.numBarrels += 1;
+			//The paramater of this function is the object which will be placed
 			GameManagerInstance.CreateObject(egotBarrel);
 		}
 		break;
 	case '2':
 		if (GameManagerInstance.editMode == true)
 		{
-			GameManagerInstance.noObjects += 1;
 			GameManagerInstance.CreateObject(egotRock);
+		}
+		break;
+	case '3':
+		if (GameManagerInstance.editMode == true)
+		{
+			GameManagerInstance.CreateObject(egotHealingMist);
+		}
+		break;
+	case '4':
+		if (GameManagerInstance.editMode == true)
+		{
+			GameManagerInstance.CreateObject(egotFire);
+		}
+		break;
+	case '5':
+		if (GameManagerInstance.editMode == true)
+		{
+			GameManagerInstance.CreateObject(egotPickaxe);
+		}
+		break;
+	case '6':
+		if (GameManagerInstance.editMode == true)
+		{
+			GameManagerInstance.CreateObject(egotMedkit);
 		}
 		break;
 
